@@ -1,7 +1,22 @@
 import React from 'react'
-import * as BooksAPI from './BooksAPI'
+// import * as BooksAPI from './BooksAPI'
 import './App.css'
+import BookGridItem from './components/Book'
 
+const books = [
+  {
+    "id": "nggnmAEACAAJ",
+    "title": "The Linux Command Line",
+    "authors": [
+      "William E. Shotts, Jr.",
+      "Iyad Kuwatly"
+    ],
+    "imageLinks": {
+      "smallThumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+      "thumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    }
+  }
+]
 class BooksApp extends React.Component {
   state = {
     /**
@@ -99,6 +114,9 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Want to Read</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
+                      <li>
+                        <div> <BookGridItem book={books[0]}/> </div>
+                      </li>
                       <li>
                         <div className="book">
                           <div className="book-top">
