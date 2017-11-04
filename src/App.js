@@ -3,22 +3,22 @@ import React from 'react'
 import './App.css'
 import BookGridItem from './components/Book'
 
-const books = [
-  {
-    "id": "nggnmAEACAAJ",
-    "title": "The Linux Command Line",
-    "authors": [
-      "William E. Shotts, Jr.",
-      "Iyad Kuwatly"
-    ],
-    "imageLinks": {
-      "smallThumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
-      "thumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-    }
-  }
-]
 class BooksApp extends React.Component {
   state = {
+    books : [
+      {
+        "id": "nggnmAEACAAJ",
+        "title": "The Linux Command Line",
+        "authors": [
+          "William E. Shotts, Jr.",
+          "Iyad Kuwatly"
+        ],
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        }
+      }
+    ],
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -115,7 +115,7 @@ class BooksApp extends React.Component {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       <li>
-                        <div> <BookGridItem books={books}/> </div>
+                        <div> <BookGridItem books={this.state.books}/> </div>
                       </li>
                       <li>
                         <div className="book">
