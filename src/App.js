@@ -5,7 +5,7 @@ import BookGridItem from './components/Book'
 
 class BooksApp extends React.Component {
   state = {
-    books : [
+    books: [
       {
         "id": "nggnmAEACAAJ",
         "title": "The Linux Command Line",
@@ -16,7 +16,8 @@ class BooksApp extends React.Component {
         "imageLinks": {
           "smallThumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
           "thumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        }
+        },
+        "shelf": "currentlyReading"
       }
     ],
     /**
@@ -26,6 +27,15 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false
+  }
+
+  bookShelfChange = (book, shelf) => {
+    const updatedBooks = this.state.books;
+    book.shelf = shelf;
+    updatedBooks.push(book)
+    this.setState((state) => ({
+      books: updatedBooks
+    }))
   }
 
   render() {
@@ -115,7 +125,7 @@ class BooksApp extends React.Component {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       <li>
-                        <div> <BookGridItem books={this.state.books}/> </div>
+                        <div><BookGridItem books={this.state.books} handleShelfChange={this.bookShelfChange}/></div>
                       </li>
                       <li>
                         <div className="book">
