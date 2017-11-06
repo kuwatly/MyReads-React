@@ -1,116 +1,13 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
 import './App.css'
-import BookGridItem from './components/Book'
 import BookList from "./components/BookList"
 import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
 
 class BooksApp extends React.Component {
   state = {
-    books: [
-      {
-        "id": "nggnmAEACAA1",
-        "title": "The Linux Command Line",
-        "authors": [
-          "William E. Shotts, Jr.",
-          "Iyad Kuwatly"
-        ],
-        "imageLinks": {
-          "smallThumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
-          "thumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        },
-        "shelf": "currentlyReading"
-      },      {
-        "id": "nggnmAEACAA2",
-        "title": "To Kill a Mockingbird",
-        "authors": [
-          "Harper Lee"
-        ],
-        "imageLinks": {
-          "smallThumbnail": "http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api",
-          "thumbnail": "http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api"
-        },
-        "shelf": "currentlyReading"
-      },      {
-        "id": "nggnmAEACAA3",
-        "title": "Ender's Game",
-        "authors": [
-          "Orson Scott Card"
-        ],
-        "imageLinks": {
-          "smallThumbnail": "http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api",
-          "thumbnail": "http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api"
-        },
-        "shelf": "wantToRead"
-      },      {
-        "id": "nggnmAEACAA4",
-        "title": "The Linux Command Line",
-        "authors": [
-          "Iyad Kuwatly"
-        ],
-        "imageLinks": {
-          "smallThumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
-          "thumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        },
-        "shelf": "wantToRead"
-      },      {
-        "id": "nggnmAEACAA5",
-        "title": "The Linux Command Line",
-        "authors": [
-          "Iyad Kuwatly"
-        ],
-        "imageLinks": {
-          "smallThumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
-          "thumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        },
-        "shelf": "wantToRead"
-      },      {
-        "id": "nggnmAEACAA6",
-        "title": "The Linux Command Line",
-        "authors": [
-          "Iyad Kuwatly"
-        ],
-        "imageLinks": {
-          "smallThumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
-          "thumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        },
-        "shelf": "read"
-      },      {
-        "id": "nggnmAEACAA7",
-        "title": "The Linux Command Line",
-        "authors": [
-          "Iyad Kuwatly"
-        ],
-        "imageLinks": {
-          "smallThumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
-          "thumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        },
-        "shelf": "read"
-      },      {
-        "id": "nggnmAEACAA8",
-        "title": "The Linux Command Line",
-        "authors": [
-          "Iyad Kuwatly"
-        ],
-        "imageLinks": {
-          "smallThumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
-          "thumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        },
-        "shelf": "read"
-      },      {
-        "id": "nggnmAEACAA9",
-        "title": "The Linux Command Line",
-        "authors": [
-          "Iyad Kuwatly"
-        ],
-        "imageLinks": {
-          "smallThumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
-          "thumbnail": "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        },
-        "shelf": "none"
-      }
-    ],
+    books: [],
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -119,6 +16,11 @@ class BooksApp extends React.Component {
      */
     showSearchPage: true,
     query: ''
+  }
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState( { books })
+    })
   }
 
   bookShelfChange = (book, shelf) => {
