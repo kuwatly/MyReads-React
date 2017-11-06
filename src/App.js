@@ -37,12 +37,13 @@ class BooksApp extends React.Component {
   }
 
   render() {
+    const { books } = this.state
     let showingBooks
     if (this.state.query) {
       const match = new RegExp(escapeRegExp(this.state.query, 'i'))
-      showingBooks = this.state.books.filter((book) => match.test(book.title))
+      showingBooks = books.filter((book) => match.test(book.title))
     } else {
-      showingBooks = this.state.books
+      showingBooks = books
     }
     showingBooks.sort(sortBy('title'))
     return (
@@ -84,13 +85,13 @@ class BooksApp extends React.Component {
             <div className="list-books-content">
               <div>
                 <BookList listTitle={"Currently Reading"}
-                          books={this.state.books.filter((book) => book.shelf === "currentlyReading")}
+                          books={books.filter((book) => book.shelf === "currentlyReading")}
                           bookShelfChange={this.bookShelfChange}/>
                 <BookList listTitle={"Want to Read"}
-                          books={this.state.books.filter((book) => book.shelf === "wantToRead")}
+                          books={books.filter((book) => book.shelf === "wantToRead")}
                           bookShelfChange={this.bookShelfChange}/>
                 <BookList listTitle={"Read"}
-                          books={this.state.books.filter((book) => book.shelf === "read")}
+                          books={books.filter((book) => book.shelf === "read")}
                           bookShelfChange={this.bookShelfChange}/>
               </div>
             </div>
