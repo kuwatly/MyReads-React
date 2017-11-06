@@ -2,7 +2,9 @@ import React from 'react'
 // import * as BooksAPI from './BooksAPI'
 import './App.css'
 import BookGridItem from './components/Book'
-import BookList from "./components/BookList";
+import BookList from "./components/BookList"
+import escapeRegExp from 'escape-string-regexp'
+import sortBy from 'sort-by'
 
 class BooksApp extends React.Component {
   state = {
@@ -133,6 +135,14 @@ class BooksApp extends React.Component {
   }
 
   render() {
+    let showingBooks
+    if (this.state.query) {
+      const match = new RegExp(escapeRegExp(this.state.query, 'i'))
+      showingBooks = this.state.books.filter((book) => match.test(book.title))
+    } else {
+      showingBooks = this.state.books
+    }
+    showingBooks.sort(sortBy('title'))
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -155,11 +165,13 @@ class BooksApp extends React.Component {
                   value={this.state.query}
                   onChange={(event) => this.updateQuery(event.target.value)}
                 />
-                {JSON.stringify(this.state.query)}
               </div>
             </div>
             <div className="search-books-results">
               <ol className="books-grid"></ol>
+              <BookList listTitle={"Search Results"}
+                        books={showingBooks}
+                        handleShelfChange={this.bookShelfChange}/>
             </div>
           </div>
         ) : (
