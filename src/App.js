@@ -17,9 +17,10 @@ class BooksApp extends React.Component {
     showSearchPage: true,
     query: ''
   }
+
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-      this.setState( { books })
+      this.setState({books})
     })
   }
 
@@ -33,11 +34,15 @@ class BooksApp extends React.Component {
   }
 
   updateQuery(query) {
-    this.setState({ query: query.trim() })
+    this.setState({query: query.trim()})
+  }
+
+  clearQuery = () => {
+    this.setState({query: ''})
   }
 
   render() {
-    const { books } = this.state
+    const {books} = this.state
     let showingBooks
     if (this.state.query) {
       const match = new RegExp(escapeRegExp(this.state.query, 'i'))
@@ -71,6 +76,14 @@ class BooksApp extends React.Component {
               </div>
             </div>
             <div className="search-books-results">
+
+              {showingBooks.length !== books.length && (
+                <div className='showing-books'>
+                  <span>Now showing {showingBooks.length} of {books.length} </span>
+                  <button onClick={this.clearQuery}>Show all</button>
+                </div>
+              )}
+
               <ol className="books-grid"></ol>
               <BookList listTitle={"Search Results"}
                         books={showingBooks}
