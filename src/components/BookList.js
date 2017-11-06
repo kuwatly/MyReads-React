@@ -9,7 +9,7 @@ function BookList(props) {
       <div className="bookshelf-books">
         <ol className="books-grid">
           {props.books.map(book =>
-            <BookGridItem book={book} handleShelfChange={props.bookShelfChange}/>
+            <BookGridItem key={book.id} book={book} bookShelfChange={props.bookShelfChange}/>
           )}
         </ol>
       </div>
@@ -20,7 +20,7 @@ function BookList(props) {
 BookList.propTypes = {
   listTitle: PropTypes.string.isRequired,
   books: PropTypes.array,
-  handleShelfChange: PropTypes.func.isRequired
+  bookShelfChange: PropTypes.func.isRequired
 }
 
 export default BookList;

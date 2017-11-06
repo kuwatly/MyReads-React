@@ -12,7 +12,7 @@ function BookGridItem(props) {
             backgroundImage: "url(" + (props.book.imageLinks.thumbnail || props.book.imageLinks.smallThumbnail) + ")"
           }}></div>
           <div className="book-shelf-changer">
-            <select value={props.book.shelf} onChange={(e) => props.handleShelfChange(props.book, e.target.value)}>
+            <select value={props.book.shelf} onChange={(e) => props.bookShelfChange(props.book, e.target.value)}>
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
@@ -30,7 +30,7 @@ function BookGridItem(props) {
 
 BookGridItem.propTypes = {
   book: PropTypes.object.isRequired,
-  handleShelfChange: PropTypes.func.isRequired
+  bookShelfChange: PropTypes.func.isRequired
 }
 
 export default BookGridItem

@@ -24,12 +24,12 @@ class BooksApp extends React.Component {
   }
 
   bookShelfChange = (book, shelf) => {
-    const updatedBooks = this.state.books;
     book.shelf = shelf;
-    updatedBooks.push(book)
-    this.setState((state) => ({
-      books: updatedBooks
-    }))
+    this.setState(state => ({
+      books: state.books.filter(b => b.id !== book.id).concat([book]),
+    }));
+
+    BooksAPI.update(book, shelf)
   }
 
   updateQuery(query) {
@@ -73,7 +73,7 @@ class BooksApp extends React.Component {
               <ol className="books-grid"></ol>
               <BookList listTitle={"Search Results"}
                         books={showingBooks}
-                        handleShelfChange={this.bookShelfChange}/>
+                        bookShelfChange={this.bookShelfChange}/>
             </div>
           </div>
         ) : (
@@ -85,13 +85,13 @@ class BooksApp extends React.Component {
               <div>
                 <BookList listTitle={"Currently Reading"}
                           books={this.state.books.filter((book) => book.shelf === "currentlyReading")}
-                          handleShelfChange={this.bookShelfChange}/>
+                          bookShelfChange={this.bookShelfChange}/>
                 <BookList listTitle={"Want to Read"}
                           books={this.state.books.filter((book) => book.shelf === "wantToRead")}
-                          handleShelfChange={this.bookShelfChange}/>
+                          bookShelfChange={this.bookShelfChange}/>
                 <BookList listTitle={"Read"}
                           books={this.state.books.filter((book) => book.shelf === "read")}
-                          handleShelfChange={this.bookShelfChange}/>
+                          bookShelfChange={this.bookShelfChange}/>
               </div>
             </div>
             <div className="open-search">
