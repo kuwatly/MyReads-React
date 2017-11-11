@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from '../apis/BooksAPI'
 import BookList from "./BookList"
-import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
 
 class BookSearch extends Component {
@@ -29,6 +28,7 @@ class BookSearch extends Component {
   updateQuery(query) {
     BooksAPI.search(query, 50).then((books) => {
       this.setState({books})
+      JSON.stringify({ books })
     })
 
     this.setState({query: query.trim()})
@@ -36,18 +36,14 @@ class BookSearch extends Component {
 
   clearQuery = () => {
     this.setState({query: ''})
+    BooksAPI.getAll().then((books) => {
+      this.setState({books})
+    })
   }
 
   render() {
     const {books} = this.state
-    let showingBooks
-    if (this.state.query) {
-      const match = new RegExp(escapeRegExp(this.state.query, 'i'))
-      showingBooks = books.filter((book) => match.test(book.title))
-    } else {
-      showingBooks = books
-    }
-    showingBooks.sort(sortBy('title'))
+    books.sort(sortBy('title'))
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -64,16 +60,14 @@ class BookSearch extends Component {
         </div>
         <div className="search-books-results">
 
-          {showingBooks.length !== books.length && (
             <div className='showing-books'>
-              <span>Now showing {showingBooks.length} of {books.length} </span>
-              <button onClick={this.clearQuery}>Show all</button>
+              <span>Now showing {books.length} </span>
+              <button onClick={this.clearQuery}>Reset</button>
             </div>
-          )}
 
           <ol className="books-grid"></ol>
           <BookList listTitle={"Search Results"}
-                    books={showingBooks}
+                    books={books}
                     bookShelfChange={this.bookShelfChange}/>
         </div>
       </div>
