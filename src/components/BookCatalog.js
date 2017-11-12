@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from '../apis/BooksAPI'
 import BookList from "./BookList"
+import startCase from "lodash.startcase";
 
 class BookCatalog extends Component {
   state = {
@@ -25,6 +26,10 @@ class BookCatalog extends Component {
 
   render() {
     const {books} = this.state
+    const filter = books => shelf => books.filter(book => book.shelf === shelf);
+    const filterBy = filter(books);
+    const shelves = ["currentlyReading", "wantToRead", "read"];
+
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -32,15 +37,16 @@ class BookCatalog extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            <BookList listTitle={"Currently Reading"}
-                      books={books.filter((book) => book.shelf === "currentlyReading")}
-                      bookShelfChange={this.bookShelfChange}/>
-            <BookList listTitle={"Want to Read"}
-                      books={books.filter((book) => book.shelf === "wantToRead")}
-                      bookShelfChange={this.bookShelfChange}/>
-            <BookList listTitle={"Read"}
-                      books={books.filter((book) => book.shelf === "read")}
-                      bookShelfChange={this.bookShelfChange}/>
+            {shelves.map(shelf => {
+              return (
+                <BookList
+                  key={shelf}
+                  className="list-books-content"
+                  listTitle={startCase(shelf)}
+                  books={filterBy(shelf)}
+                  bookShelfChange={this.bookShelfChange}/>
+              );
+            })}
           </div>
         </div>
         <div className="open-search">
