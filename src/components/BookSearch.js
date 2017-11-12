@@ -7,12 +7,16 @@ import sortBy from 'sort-by'
 class BookSearch extends Component {
   state = {
     books: [],
+    myBooks: [],
     query: ''
   }
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-      this.setState({books})
+      this.setState(state => ({
+        books: books,
+        myBooks: books
+      }))
     })
   }
 
@@ -20,15 +24,23 @@ class BookSearch extends Component {
     book.shelf = shelf;
     this.setState(state => ({
       books: state.books.filter(b => b.id !== book.id).concat([book]),
+      myBooks: state.myBooks.filter(b => b.id !== book.id).concat([book]),
     }));
 
     BooksAPI.update(book, shelf)
   }
 
   updateQuery(query) {
-    BooksAPI.search(query, 50).then((books) => {
-      this.setState({books})
-      JSON.stringify({ books })
+    BooksAPI.search(query, 20).then((books) => {
+      this.setState(state => {
+        state.books = books.map(book => {
+          const myBook = this.state.myBooks.find(b => b.id === book.id);
+          return myBook
+            ? myBook
+            : Object.assign(book, { shelf: "" });
+        });
+        return state;
+      });
     })
 
     this.setState({query: query.trim()})
@@ -36,9 +48,7 @@ class BookSearch extends Component {
 
   clearQuery = () => {
     this.setState({query: ''})
-    BooksAPI.getAll().then((books) => {
-      this.setState({books})
-    })
+    this.setState({books: this.state.myBooks})
   }
 
   render() {
